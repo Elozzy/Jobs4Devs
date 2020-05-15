@@ -1,7 +1,10 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const Handlebars = require('handlebars');
 const path = require('path');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+
 
 // Database
 const db = require('./config/db.config');
@@ -13,6 +16,15 @@ db.authenticate().then(() => console.log('db connected ...')).catch(err => conso
 
 
 const app = express();
+
+//Handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main',
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
+}));
+app.set('view engine', 'handlebars');
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => res.send('INDEX'));
 
