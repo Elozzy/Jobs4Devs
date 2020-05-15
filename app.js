@@ -3,12 +3,11 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const Handlebars = require('handlebars');
 const path = require('path');
+//performs an operation similar to cors but strictly for handlebars
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 
 // Database
 const db = require('./config/db.config');
-
-
 db.authenticate().then(() => console.log('db connected ...')).catch(err => console.log('Error: ' + err))
 
 const app = express();

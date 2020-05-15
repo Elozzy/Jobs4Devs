@@ -15,8 +15,8 @@ router.get('/', (req, res) =>
                 gigs
             });
         })
-
-        .catch(err => console.log(err)));
+      .catch(err => console.log(err))
+);
 
 
 //Display add gig form
