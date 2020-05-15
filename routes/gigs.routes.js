@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
 const Gig = require('../models/Gig.model');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 //get gig list
@@ -74,6 +76,20 @@ router.post('/add', (req, res) => {
 
     }
 
+
+});
+
+
+// Search for gigs
+router.get('/search', (req, res) => {
+    let {term} = req.query;
+    term = term.toLocaleLowerCase();
+
+    Gig.findAll({where: {technologies: {[Op.like]: '%' + term + '%' }}})
+        .then(gigs => res.render('gigs', {gigs}))
+        .catch(err => console.log(err));
+    
+    ;
 
 });
 
